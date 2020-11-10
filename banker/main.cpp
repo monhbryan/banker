@@ -3,15 +3,31 @@
 #include <fstream>
 #include <vector>
 #include <thread>
-
+#include <string>
 #include "customer.h"
-
 
 int main(int argc, const char* argv[]) {           // TODO   fill in missing code
   // read available resources from command line
-  
+  std::string line;
+  std::fstream inFile;
+  inFile.open("bankers_tiny.txt");
+  if(inFile.is_open()){
+    std::getline(inFile, line);
+  }
+
+  std::vector<int> resources;
+  std::string delimiter = ",";
+  std::string token;
+
+  int pos = 0;
+  while( pos = line.find(delimiter) != std::string::npos ){
+    token = line.substr(0,pos);
+    resources.push_back(stoi(token));
+    line.erase(0, pos+delimiter.length());
+  }
+
   std::vector<Customer> customers;
-  std::vector<thread>   workers;
+  std::vector<std::thread>   workers;
   BankImpl              theBank(resources);
   std::vector<int>      maxDemand;
   std::vector<int>      allocated;
