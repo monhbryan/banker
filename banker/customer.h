@@ -12,6 +12,7 @@ private:
     
   bool isAllZero(){
 
+  }
 public:
     Customer(int customerNum, std::vector<int>& maxDemand, BankImpl& theBank);
     void operator()();
