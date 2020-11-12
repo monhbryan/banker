@@ -14,6 +14,13 @@ private:
 
   }
 public:
-    Customer(int customerNum, std::vector<int>& maxDemand, BankImpl& theBank);
+    Customer(int customerNum, std::vector<int>& maxDemand, BankImpl& theBank){
+      this.customerNum = customerNum;
+      this.maxDemand = maxDemand;
+      this.theBank = theBank;
+
+      numOfResources = maxDemand.length();
+      request = 
+    }
     void operator()();
 };
