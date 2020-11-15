@@ -9,11 +9,34 @@
 #include "ext_vector.h"
 #include "bankexample.h"
 #include "customerexample.h"
-#include "utils.h"
-
+//#include "utils.h"
+//Note: utils.h broken...
+// will create custom function yes_or_no to replace. Input: boolean value, outout: string with "yes" or "no"
+// will recreate custom function strstrip to replace. Input: a string, output: string with no punctuation[only alphanumeric characters]
+#include <string>
+#include <string.h>
+#include <cctype>
+#include <functional>
+std::string yes_or_no(bool value){
+  if(value == true) { return "Yes";}
+  return "No";
+}
+std::string strstrip(std::string buf){
+  std::string str = buf;
+  size_t i = 0;
+  size_t len = str.length();
+  while(i < len){
+      if (!isalnum(str[i]) || str[i] == ' '){
+          str.erase(i,1);
+          len--;
+      }else
+          i++;
+  }
+  return str;
+}
 
 //#include "customer.h"
-//#include "bank.h"
+#include "bank.h"
 //
 //
 pthread_mutex_t mutex_;  // prevents intermingled printing by threads (customers)
@@ -36,7 +59,7 @@ void run_customer_bank_tests() {
   BankExample* pBank = new BankExample(avail);
 
   std::cout << "\nCustomer: " << c0;
-  std::cout << "needs met? " << Utils::yes_or_no(c0.needs_met()) << "\n\n";
+  std::cout << "needs met? " << yes_or_no(c0.needs_met()) << "\n\n";
 
   std::cout << "\nBank: " << *pBank << "\n";
   pBank->add_customer(&c0);
@@ -47,8 +70,8 @@ void run_customer_bank_tests() {
 
   ext_vector<int> req = c0.create_req();
   std::cout << "random request: " << req << "\n";
-  std::cout << "Is this req available? " << Utils::yes_or_no(pBank->is_avail(req)) << "\n";
-  std::cout << "     Is this req safe? " << Utils::yes_or_no(pBank->is_safe(0, req)) << "\n";
+  std::cout << "Is this req available? " << yes_or_no(pBank->is_avail(req)) << "\n";
+  std::cout << "     Is this req safe? " << yes_or_no(pBank->is_safe(0, req)) << "\n";
 
   std::cout << "Withdrawing request from bank...\n";
   pBank->withdraw_resources(req);
@@ -71,7 +94,7 @@ void run_customer_bank_tests() {
   std::cout << "Customer: " << c0;
 
   std::cout << "\nCustomer: " << c0;
-  std::cout << "needs met? " << Utils::yes_or_no(c0.needs_met()) << "\n\n";
+  std::cout << "needs met? " << yes_or_no(c0.needs_met()) << "\n\n";
   c0.release_all_resources();
   std::cout << "Customer: " << c0 << "\n";
 
@@ -153,7 +176,7 @@ void verify(int argc, const char* argv[]) {
 void process_line(char* buf, ext_vector<int>& values) {    // gets values from one line
   int i = 0;
 
-  Utils::strstrip(buf);  // strip punctuation
+  /*Utils::*/strstrip(buf);  // strip punctuation
   values.clear();
 
   char* p = strtok(buf, " ");   // split into tokens
@@ -218,9 +241,9 @@ void process_files(int argc, const char* argv[], BankExample*& bank) {    // pro
 
 
 int main(int argc, const char * argv[]) {
-//  ext_vector<int>::run_tests();
+//ext_vector<int>::run_tests();
   
-//  run_customer_bank_tests();
+  run_customer_bank_tests();
 
   BankExample* bank = nullptr;
 
