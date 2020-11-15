@@ -9,7 +9,7 @@
 #define customerexample_h
 
 #include "bankexample.h"
-
+#include <random>
 class BankExample;
 
 extern pthread_mutex_t mutex_;
@@ -17,7 +17,7 @@ extern pthread_mutex_t mutex_;
 
 class CustomerExample {
 public:
-//  CustomerExample() = default;
+  CustomerExample() = default;
   CustomerExample(int index, const ext_vector<int>& allocate, const ext_vector<int>& maximum,
                   BankExample* bank_=nullptr)
   : idx(index), alloc(allocate), max_(maximum), need(max_ - alloc), bank(bank_) { }
@@ -28,6 +28,7 @@ public:
   BankExample* get_bank() const { return bank; }
   ext_vector<int> get_max() const { return max_; }
   
+  ext_vector<int> get_alloc() const {return alloc;}
   bool needs_met() const { return alloc == max_; }
   
   void alloc_req(  const ext_vector<int>& req) { alloc += req;  need -= req; }
@@ -50,7 +51,16 @@ public:
     return os;
   }
   
-  ext_vector<int> create_req() { return ext_vector<int>({ 1, 1, 1 }); }
+  ext_vector<int> create_req() { 
+    size_t t = alloc.size();
+    ext_vector<int> random;
+    int r;
+    for(int i =0; i<max_.size() ; i++){
+      r = rand() % 2;
+      random.push_back(r);
+    }
+    return random;
+  }
   
 private:
   int idx;
@@ -58,7 +68,6 @@ private:
   ext_vector<int> max_;
   ext_vector<int> need;
   pthread_t        thread_id;
-  
   BankExample* bank;
 };
 
