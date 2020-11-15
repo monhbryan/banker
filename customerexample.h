@@ -3,7 +3,7 @@
 //  bankers
 //
 //  Created by William McCarthy on 1011//20.
-//
+// Modified by Bryan Monh
 
 #ifndef customerexample_h
 #define customerexample_h

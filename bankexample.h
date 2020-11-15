@@ -2,8 +2,8 @@
 //  bankexample.h
 //  bankers
 //
-//  Created by William McCarthy on 1011//20.
-//
+//  Created by William McCarthy on 10//11//20.
+// Modified by Bryan Monh 
 
 #ifndef bankexample_h
 #define bankexample_h
